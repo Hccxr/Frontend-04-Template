@@ -1,0 +1,69 @@
+<style>
+    .default{
+      width:100px;
+      height:100px;
+      background-color:#eee;
+      border-radius: 100px;
+      display: inline-block;
+      margin-right: 20px;
+    }
+    .green.light{
+        background-color: green;
+    }
+    .yellow.light{
+        background-color: yellow;
+    }
+    .red.light{
+        background-color: red;
+    }
+  </style>
+  <html>
+      <body>
+        <div class="green default"></div>
+        <div class="yellow default"></div>
+        <div class="red default"></div>
+      </body>
+      <script>
+
+          function green () {
+            var lights = document.getElementsByClassName("default");
+            for (let i =0;i< 3;i++) {
+                lights[i].classList.remove('light')
+                document.getElementsByClassName("green")[0].classList.add("light")
+            }
+          }
+          function yellow () {
+            var lights = document.getElementsByClassName("default");
+            for (let i =0;i< 3;i++) {
+                lights[i].classList.remove('light')
+                document.getElementsByClassName("yellow")[0].classList.add("light")
+            }
+          }
+          function red () {
+            var lights = document.getElementsByClassName("default");
+            for (let i =0;i< 3;i++) {
+                lights[i].classList.remove('light')
+                document.getElementsByClassName("red")[0].classList.add("light")
+            }
+          }
+          function watch (time) {
+            return new Promise ( resolve => {
+                setTimeout(resolve,time)
+            }) 
+          }
+          function init () {
+            green();
+            watch(1000).then( () => {
+                yellow();
+                return watch(3000)
+            }).then( () => {
+                red()
+                return watch(2000)
+            }).then(
+                init
+            )
+          }
+          init()
+      </script>
+  </html>
+  
